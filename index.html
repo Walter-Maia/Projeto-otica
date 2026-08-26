@@ -73,7 +73,7 @@
   --transition:300ms ease;
   --shadow-soft:0 20px 60px -30px rgba(10,10,10,.25);
   --header-h:72px;
-  --topbar-h:38px;
+  --topbar-h:48px;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -166,21 +166,21 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ---------- Top bar ---------- */
 .topbar{
-  background:var(--color-black);color:rgba(255,255,255,.85);height:var(--topbar-h);
+  background:var(--color-black);color:#FFFFFF;height:var(--topbar-h);
   width:100%;display:flex;align-items:center;overflow:hidden;
-  font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;
+  font-size:15px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;line-height:1;
   position:relative;z-index:60;
 }
 .marquee-track{
   flex:none;min-width:100%;display:flex;align-items:center;justify-content:space-around;
-  gap:56px;padding-right:56px;white-space:nowrap;
-  animation:marquee 32s linear infinite;will-change:transform;
+  gap:76px;padding-right:76px;white-space:nowrap;
+  animation:marquee 38s linear infinite;will-change:transform;
 }
 @keyframes marquee{to{transform:translateX(-100%)}}
 .topbar:hover .marquee-track{animation-play-state:paused}
 .mq-item{flex:none}
-.mq-sep{flex:none;color:var(--color-gold);font-size:9px}
-.topbar em{font-style:normal;color:var(--color-gold)}
+.mq-sep{flex:none;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.7);font-size:0}
+.topbar em{font-style:normal;color:#FFFFFF;font-weight:600}
 
 /* ---------- Header ---------- */
 .site-header{
@@ -193,8 +193,8 @@ ul{margin:0;padding:0;list-style:none}
 .site-header.over-hero{background:transparent;backdrop-filter:none}
 .site-header.scrolled{background:rgba(255,255,255,.94);border-bottom-color:var(--color-border)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-md);width:min(94%,1560px);margin-inline:auto}
-.logo{display:flex;flex-direction:column;line-height:1;gap:3px}
-.logo-img{height:52px;width:auto;display:block}
+.logo{display:flex;flex-direction:column;align-items:flex-start;line-height:1;gap:3px}
+.logo-img{height:52px;width:auto;max-width:none;display:block;align-self:flex-start;object-fit:contain}
 .logo-img-lg{height:76px}
 .main-nav{display:flex;gap:clamp(14px,2vw,30px)}
 .main-nav a{
@@ -208,14 +208,16 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ---------- Hero ---------- */
 .hero{
-  min-height:calc(88vh - var(--header-h) - var(--topbar-h));
-  display:grid;grid-template-columns:1fr 1fr;align-items:stretch;
+  --hero-duration:4500ms;
+  min-height:calc(100vh - var(--topbar-h));
+  min-height:calc(100svh - var(--topbar-h));
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);align-items:stretch;
   margin-top:calc(-1 * var(--header-h));padding-top:var(--header-h);
   position:relative;
 }
 .hero-copy{
   display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(40px,6vw,110px) clamp(24px,5vw,90px);
+  padding:clamp(40px,6vw,110px) clamp(20px,3vw,48px) clamp(40px,6vw,110px) clamp(24px,5vw,90px);
   position:relative;z-index:2;
 }
 .hero-label{
@@ -227,25 +229,162 @@ ul{margin:0;padding:0;list-style:none}
 .hero-title .thin{font-weight:200}
 .hero-lead{max-width:44ch;margin-bottom:40px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-.hero-visual{position:relative;overflow:hidden;min-height:420px}
-.hero-visual img{width:100%;height:100%;object-fit:cover;transform:scale(1.03);transition:transform 1.4s ease}
-.hero:hover .hero-visual img{transform:scale(1.075)}
-.hero-visual::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(100deg,var(--color-bg) 0%,transparent 26%);
-}
 .hero-watermark{
   position:absolute;left:0;right:0;bottom:-1.5vw;z-index:1;pointer-events:none;
   font-size:clamp(90px,15vw,230px);font-weight:800;letter-spacing:.08em;
-  color:transparent;-webkit-text-stroke:1px rgba(10,10,10,.07);
+  color:transparent;-webkit-text-stroke:1px rgba(10,10,10,.045);
   white-space:nowrap;line-height:1;user-select:none;
 }
-.hero-frame{
-  position:absolute;top:14%;right:6%;width:120px;height:120px;
-  border:1px solid var(--color-gold);opacity:.55;z-index:3;pointer-events:none;
-  animation:floaty 7s ease-in-out infinite;
+
+/* ---------- Hero — Eyewear Showcase ---------- */
+.hero-showcase{
+  position:relative;z-index:2;display:flex;
+  padding:clamp(20px,2.6vw,36px) clamp(20px,3vw,48px) clamp(28px,3.4vw,48px) 0;
 }
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hero-showcase:focus-visible{outline:none}
+.hero-showcase:focus-visible .hero-stage{outline:2px solid var(--color-gold-dark);outline-offset:4px}
+.hero-stage{
+  --hero-bg:#DDD7CE;
+  flex:1;display:flex;flex-direction:column;position:relative;isolation:isolate;
+  border-radius:var(--radius-lg);
+  padding:clamp(20px,2.4vw,32px) clamp(20px,2.6vw,36px) clamp(18px,2vw,26px);
+  background:var(--hero-bg);color:var(--color-text);
+  transition:background-color 900ms ease;
+  box-shadow:0 50px 90px -60px rgba(10,10,10,.35);
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;
+}
+.hero-stage-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;min-height:30px}
+.hero-stage-tag{
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--color-gold-dark);
+  display:inline-flex;align-items:center;gap:12px;
+  transition:opacity 260ms ease,transform 260ms ease;
+}
+.hero-stage-tag::before{content:"";width:22px;height:1px;background:var(--color-gold)}
+.hero-stage-mark{
+  font-size:9px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;
+  color:rgba(23,23,23,.5);text-align:right;line-height:1.7;
+}
+.hero-product-area{
+  flex:1;position:relative;display:flex;align-items:center;justify-content:center;
+  padding-block:clamp(10px,1.6vw,22px);min-height:220px;
+}
+.hero-product-link{
+  display:block;position:relative;width:min(94%,660px);cursor:pointer;
+  animation:heroFloat 7s ease-in-out infinite;
+}
+.hero-product-frame{
+  position:relative;aspect-ratio:4/3;max-height:min(54vh,540px);
+  isolation:isolate;background:var(--hero-bg);
+  transition:transform 700ms cubic-bezier(.22,1,.36,1),background-color 900ms ease;
+}
+@supports not (aspect-ratio:1/1){.hero-product-frame{height:0;padding-top:75%}}
+.hero-product-link:hover .hero-product-frame{transform:scale(1.025)}
+.hero-stage.is-dragging .hero-product-frame{transition:background-color 900ms ease}
+.hero-product-frame::before{
+  content:"LIONN";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:11px;letter-spacing:.4em;font-weight:700;color:rgba(23,23,23,.22);z-index:0;
+  opacity:0;transition:opacity 300ms ease;
+}
+.hero-product-frame.is-empty::before{opacity:1}
+.hero-product-shadow{
+  position:absolute;left:14%;right:14%;bottom:5%;height:16%;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(10,10,10,.2) 0%,rgba(10,10,10,.07) 45%,transparent 72%);
+  filter:blur(10px);pointer-events:none;
+}
+.hero-product-image{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  mix-blend-mode:multiply;filter:contrast(1.06) brightness(var(--hero-lift,1.08));
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 var(--hero-feather,8%),#000 calc(100% - var(--hero-feather,8%)),transparent),linear-gradient(to bottom,transparent,#000 var(--hero-feather,8%),#000 calc(100% - var(--hero-feather,8%)),transparent);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,#000 var(--hero-feather,8%),#000 calc(100% - var(--hero-feather,8%)),transparent),linear-gradient(to bottom,transparent,#000 var(--hero-feather,8%),#000 calc(100% - var(--hero-feather,8%)),transparent);
+  mask-composite:intersect;
+  -webkit-user-drag:none;user-select:none;pointer-events:none;
+  opacity:0;transform:translateX(20px) scale(.98);
+  transition:opacity 650ms cubic-bezier(.22,1,.36,1),transform 750ms cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+/* recortes com fundo transparente: sem máscara, contain e sombra pela silhueta */
+.hero-product-image.is-cutout{
+  object-fit:contain;-webkit-mask-image:none;mask-image:none;
+  filter:drop-shadow(0 28px 24px rgba(10,10,10,.16));
+}
+.hero-product-image.is-active{opacity:1;transform:none}
+.hero-product-image.is-out{opacity:0;transform:translateX(-20px) scale(.98)}
+.hero-product-image.no-transition{transition:none}
+.hero-product-image.is-broken{visibility:hidden}
+.hero-product-hint{
+  position:absolute;left:50%;bottom:6%;transform:translate(-50%,6px);z-index:2;
+  font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;
+  padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(8px);
+  color:var(--color-text);opacity:0;transition:opacity 300ms ease,transform 300ms ease;
+  white-space:nowrap;pointer-events:none;
+}
+.hero-product-link:hover .hero-product-hint,.hero-product-link:focus-visible .hero-product-hint{opacity:1;transform:translate(-50%,0)}
+.hero-arrow{
+  position:absolute;top:50%;z-index:3;width:40px;height:40px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.5);backdrop-filter:blur(8px);
+  transform:translateY(-50%);opacity:0;
+  transition:opacity 300ms ease,background 300ms ease;
+}
+.hero-arrow-prev{left:-8px}
+.hero-arrow-next{right:-8px}
+.hero-arrow .icon{width:18px;height:18px;transition:transform 300ms cubic-bezier(.22,1,.36,1)}
+.hero-arrow:hover{background:rgba(255,255,255,.85)}
+.hero-arrow-next:hover .icon{transform:translateX(4px)}
+.hero-arrow-prev:hover .icon{transform:translateX(-4px)}
+.hero-stage:hover .hero-arrow,.hero-stage:focus-within .hero-arrow,.hero-arrow:focus-visible{opacity:1}
+.hero-product-meta{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:20px;
+  transition:opacity 260ms ease,transform 260ms ease;
+}
+.hero-product-meta.is-switching,.hero-stage-tag.is-switching{opacity:0;transform:translateY(8px)}
+.hero-product-name{
+  display:block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  transition:color var(--transition);
+}
+.hero-product-name:hover{color:var(--color-gold-dark)}
+.hero-product-color{display:block;margin-top:5px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,23,23,.58);font-weight:600}
+.hero-product-pricing{text-align:right;flex:none}
+.hero-product-price{display:block;font-size:15px;font-weight:600;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.hero-product-installments{display:block;margin-top:5px;font-size:10.5px;color:rgba(23,23,23,.58);letter-spacing:.02em}
+.hero-product-view{align-self:flex-start;margin-top:14px;font-size:10.5px;letter-spacing:.24em;padding-bottom:5px}
+.hero-product-view span{display:inline-block;margin-left:6px;transition:transform 300ms cubic-bezier(.22,1,.36,1)}
+.hero-product-view:hover span{transform:translateX(4px)}
+.hero-controls{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  margin-top:clamp(14px,1.6vw,22px);padding-top:clamp(10px,1.2vw,14px);
+  border-top:1px solid rgba(20,20,20,.1);
+}
+.hero-indicators{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero-indicator{
+  display:flex;align-items:center;padding:12px 0;position:relative;
+  transition:transform 250ms cubic-bezier(.22,1,.36,1);
+}
+.hero-indicator:hover{transform:scaleX(1.08)}
+.hero-indicator:focus-visible{outline-offset:-6px}
+.hero-indicator-bar{
+  display:block;width:48px;height:7px;border-radius:999px;overflow:hidden;position:relative;
+  background:rgba(20,20,20,.22);transition:background 300ms ease;
+}
+.hero-indicator[aria-current="true"] .hero-indicator-bar{background:rgba(20,20,20,.3)}
+.hero-indicator-progress{
+  position:absolute;inset:0;border-radius:999px;background:#171717;
+  transform:scaleX(0);transform-origin:left;
+}
+.hero-indicator[aria-current="true"] .hero-indicator-progress{animation:heroProgress var(--hero-duration) linear forwards}
+.hero-showcase.is-paused .hero-indicator-progress{animation-play-state:paused}
+.hero-counter{font-size:10.5px;letter-spacing:.3em;font-weight:700;color:rgba(23,23,23,.6);font-variant-numeric:tabular-nums;white-space:nowrap}
+@keyframes heroProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media (hover:none){
+  .hero-arrow{opacity:.72;width:34px;height:34px}
+  .hero-product-link:hover .hero-product-frame{transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-product-link{animation:none}
+  .hero-indicator[aria-current="true"] .hero-indicator-progress{animation-duration:var(--hero-duration)!important;animation-iteration-count:1!important}
+}
 
 /* ---------- Trust bar ---------- */
 .trustbar{border-block:1px solid var(--color-border);background:var(--color-white)}
@@ -412,7 +551,8 @@ ul{margin:0;padding:0;list-style:none}
 .page-hero.dark .lead{color:rgba(255,255,255,.65)}
 
 /* ---------- Catalog layout ---------- */
-.catalog-layout{display:grid;grid-template-columns:250px 1fr;gap:clamp(28px,3.5vw,56px);align-items:start}
+.catalog-layout{display:grid;grid-template-columns:250px 1fr;gap:clamp(28px,3.5vw,56px);align-items:start;overflow-anchor:none}
+.catalog-results{min-height:calc(100vh - var(--header-h) - 40px)}
 .catalog-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:var(--space-md);flex-wrap:wrap}
 .result-count{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-muted);font-weight:600}
 .sort-wrap{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-muted)}
@@ -420,7 +560,13 @@ ul{margin:0;padding:0;list-style:none}
   border:1px solid var(--color-border);background:var(--color-white);padding:10px 14px;
   border-radius:var(--radius-sm);font-size:13px;letter-spacing:.02em;text-transform:none;
 }
-.filters{position:sticky;top:calc(var(--header-h) + 20px)}
+.filters{
+  position:sticky;top:calc(var(--header-h) + 20px);
+  max-height:calc(100vh - var(--header-h) - 40px);overflow-y:auto;overscroll-behavior:contain;
+  padding-right:10px;scrollbar-width:thin;scrollbar-color:var(--color-border) transparent;
+}
+.filters::-webkit-scrollbar{width:4px}
+.filters::-webkit-scrollbar-thumb{background:var(--color-border);border-radius:99px}
 .filter-group{border-top:1px solid var(--color-border);padding-block:20px}
 .filter-group:last-child{border-bottom:1px solid var(--color-border)}
 .filter-group h4{font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
@@ -678,12 +824,10 @@ ul{margin:0;padding:0;list-style:none}
 .pay-tab .pay-tag{font-size:9.5px;color:var(--color-gold-dark);letter-spacing:.1em}
 .pix-box{text-align:center;padding:10px 0}
 .pix-qr{width:172px;height:172px;margin:14px auto;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:10px;background:#fff}
-.demo-note{
-  font-size:12px;color:var(--color-muted);background:var(--color-bg);
-  border:1px dashed var(--color-border);border-radius:var(--radius-sm);
-  padding:11px 14px;margin-top:16px;display:flex;gap:9px;align-items:flex-start;
+.env-tag{
+  display:inline-block;margin-top:18px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  font-weight:700;color:var(--color-muted);
 }
-.demo-note .icon{width:14px;height:14px;flex:none;margin-top:2px;color:var(--color-gold-dark)}
 .checkout-summary{position:sticky;top:24px}
 .checkout-summary .cart-line{grid-template-columns:64px 1fr auto;padding:13px 0}
 .checkout-summary .cart-line-img{width:64px}
@@ -826,10 +970,13 @@ ul{margin:0;padding:0;list-style:none}
   .main-nav{display:none}
   #btn-menu{display:inline-flex}
   .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-visual{order:-1;min-height:52vh}
-  .hero-visual::after{background:linear-gradient(to top,var(--color-bg) 0%,transparent 30%)}
-  .hero-copy{padding-block:36px 64px;text-align:left}
-  .hero-frame{display:none}
+  .hero-copy{padding:36px 4% 6px;text-align:left}
+  .hero-lead{margin-bottom:32px}
+  .hero-showcase{padding:14px 4% 44px}
+  .hero-product-link{width:100%}
+  .hero-product-frame{max-height:none}
+  .hero-arrow-prev{left:2px}
+  .hero-arrow-next{right:2px}
   .cat-grid{grid-template-columns:1fr;gap:14px}
   .cat-card{aspect-ratio:16/10}
   .editorial{grid-template-columns:1fr}
@@ -871,9 +1018,23 @@ ul{margin:0;padding:0;list-style:none}
   .checkout-steps{font-size:9.5px;letter-spacing:.14em}
 }
 @media (max-width:576px){
+  :root{--topbar-h:40px}
+  .topbar{font-size:12px;letter-spacing:.05em}
+  .marquee-track{gap:44px;padding-right:44px}
   body{font-size:15px}
   .btn{padding:16px 26px;width:100%;max-width:420px}
   .hero-ctas .btn{width:auto;flex:1;min-width:150px;padding-inline:18px}
+  .hero-stage{padding:18px 18px 14px;border-radius:var(--radius-md)}
+  .hero-stage-top{min-height:22px}
+  .hero-stage-mark{display:none}
+  .hero-counter{position:absolute;top:19px;right:18px;font-size:10px}
+  .hero-product-area{min-height:0;padding-block:6px}
+  .hero-product-meta{align-items:flex-start}
+  .hero-product-view{margin-top:10px}
+  .hero-controls{justify-content:center;border-top:0;margin-top:6px;padding-top:0}
+  .hero-indicators{gap:8px;justify-content:center}
+  .hero-indicator{padding:10px 0}
+  .hero-indicator-bar{width:35px;height:5px}
   .search-results{grid-template-columns:1fr}
   .trustbar-inner{grid-template-columns:1fr 1fr}
   .trust-item{font-size:9.5px;padding:16px 8px;letter-spacing:.12em}
@@ -921,8 +1082,8 @@ ul{margin:0;padding:0;list-style:none}
 
 <!-- TOP BAR -->
 <div class="topbar" id="topbar">
-  <div class="marquee-track"><span class="mq-item">Frete grátis para todo o Brasil em pedidos acima de <em>R$ 1.500</em></span><span class="mq-sep" aria-hidden="true">✦</span><span class="mq-item"><em>10% off</em> na primeira compra com o código LIONN10</span><span class="mq-sep" aria-hidden="true">✦</span><span class="mq-item">Troca gratuita em até <em>30 dias</em></span><span class="mq-sep" aria-hidden="true">✦</span><span class="mq-item">Sofisticação em <em>cada olhar</em></span><span class="mq-sep" aria-hidden="true">✦</span></div>
-  <div class="marquee-track" aria-hidden="true"><span class="mq-item">Frete grátis para todo o Brasil em pedidos acima de <em>R$ 1.500</em></span><span class="mq-sep" aria-hidden="true">✦</span><span class="mq-item"><em>10% off</em> na primeira compra com o código LIONN10</span><span class="mq-sep" aria-hidden="true">✦</span><span class="mq-item">Troca gratuita em até <em>30 dias</em></span><span class="mq-sep" aria-hidden="true">✦</span><span class="mq-item">Sofisticação em <em>cada olhar</em></span><span class="mq-sep" aria-hidden="true">✦</span></div>
+  <div class="marquee-track"><span class="mq-item">Frete grátis para todo o Brasil em pedidos acima de <em>R$ 1.500</em></span><span class="mq-sep" aria-hidden="true"></span><span class="mq-item"><em>10% off</em> na primeira compra com o código LIONN10</span><span class="mq-sep" aria-hidden="true"></span><span class="mq-item">Troca gratuita em até <em>30 dias</em></span><span class="mq-sep" aria-hidden="true"></span><span class="mq-item">Sofisticação em <em>cada olhar</em></span><span class="mq-sep" aria-hidden="true"></span></div>
+  <div class="marquee-track" aria-hidden="true"><span class="mq-item">Frete grátis para todo o Brasil em pedidos acima de <em>R$ 1.500</em></span><span class="mq-sep" aria-hidden="true"></span><span class="mq-item"><em>10% off</em> na primeira compra com o código LIONN10</span><span class="mq-sep" aria-hidden="true"></span><span class="mq-item">Troca gratuita em até <em>30 dias</em></span><span class="mq-sep" aria-hidden="true"></span><span class="mq-item">Sofisticação em <em>cada olhar</em></span><span class="mq-sep" aria-hidden="true"></span></div>
 </div>
 
 <!-- HEADER -->
@@ -1066,7 +1227,7 @@ ul{margin:0;padding:0;list-style:none}
     </div>
     <div class="footer-bottom">
       <span>© 2026 Lionn Eyewear. Todos os direitos reservados.</span>
-      <span>Projeto demonstrativo — nenhuma cobrança real é efetuada.</span>
+      <span>Ambiente de teste</span>
     </div>
   </div>
 </footer>
@@ -1100,8 +1261,8 @@ const IMG_POOL = {
   a:"1511499767150-a48a237f0083", b:"1572635196237-14b3f281503f", c:"1577803645773-f96470509666",
   d:"1508296695146-257a814070b4", e:"1473496169904-658ba7c44d8a", f:"1574258495973-f010dfbb5371",
   g:"1591076482161-42ce6da69f67", h:"1610136649349-0f646f318053", i:"1625591339971-4c9a87a66871",
-  j:"1614715838608-dd527c46231d", k:"1556306535-0f09a537f0a3",  l:"1509695507497-903c140c43b0",
-  m:"1526045478516-99145907023c", n:"1502767089025-6572583495bb", o:"1529626455594-4ff0802cfb7e",
+  j:"1614715838608-dd527c46231d", k:"1556306510-31ca015374b0",  l:"1509695507497-903c140c43b0",
+  m:"1587310311582-aa7610e90826", n:"1502767089025-6572583495f9", o:"1588768897961-332c50c55d18",
   p:"1512099053734-e6767b535838"
 };
 function imgFail(el){
@@ -1157,153 +1318,257 @@ const Utils = {
   scrollTop(){ window.scrollTo({top:0, behavior:"auto"}); }
 };
 
+/* ---------------- Eyewear photo library ----------------
+   Cada entrada: [unsplash id, focal-x, focal-y].
+   Toda cor de todo produto aponta para UMA foto própria;
+   capa / hover / detalhe são recortes (fp-z) da MESMA foto,
+   garantindo que o óculos mostrado seja sempre o mesmo. */
+const PH = {
+  /* [id, focal-x, focal-y, zoom opcional da capa] */
+  /* — Óculos de sol — */
+  sunBlackGold:      ["1599838082471-71ca4aa8e0c8", .5,  .5 ],  // clubmaster preto / dourado, fundo branco
+  sunHavanaRound:    ["1587310311582-aa7610e90826", .5,  .5 ],  // redondo havana, fundo branco
+  sunGoldRound:      ["1649119161997-00ffc8c24e11", .5,  .5 ],  // redondo dourado, lente marrom
+  sunBlackClub:      ["1584036553516-bf83210aa16c", .5,  .45],  // clubmaster preto degradê, fundo branco
+  sunBlackRect:      ["1610136649349-0f646f318053", .5,  .5 ],  // retangular preto, fundo terracota
+  sunGreenCrystal:   ["1653038282189-803202722a05", .5,  .4 ],  // quadrado acetato verde translúcido
+  sunSilverAviator:  ["1562548726-43b650c82f8e",    .5,  .6 ],  // aviador prata
+  sunGoldMarble:     ["1511499767150-a48a237f0083", .5,  .5 ],  // redondo dourado lente verde, mármore
+  sunNudeCat:        ["1508296695146-257a814070b4", .5,  .5 ],  // cat eye blush / gold
+  sunTortCatGold:    ["1760446031507-ed534e0f9605", .5,  .55],  // cat eye havana com detalhe dourado, hastes abertas
+  sunBlackGoldSq:    ["1760446031524-79586718421d", .5,  .55],  // quadrado preto / dourado, hastes abertas
+  sunCrystalRound:   ["1577803645773-f96470509666", .5,  .55],  // cristal com lente âmbar
+  sunTortCat:        ["1559070081-648fb00b2ed1",    .55, .55],  // cat eye tartaruga
+  sunPinkRound:      ["1509695507497-903c140c43b0", .5,  .58],  // rosé redondo com estojo
+  sunBlackBeach:     ["1473496169904-658ba7c44d8a", .5,  .5 ],  // redondo preto na areia
+  sunBlackMirror:    ["1502767089025-6572583495f9", .45, .6 ],  // clubmaster preto espelhado
+  sunBlackRoundPink: ["1618677366787-9727aacca7ea", .5,  .45],  // redondo preto, fundo rosé
+  /* — Óculos de grau — */
+  optHavanaClub:     ["1574258495973-f010dfbb5371", .5,  .5 ],  // clubmaster havana sobre livro
+  optBlackClubWood:  ["1591076482161-42ce6da69f67", .5,  .78, 1.3],  // clubmaster preto, madeira
+  optCrystalGrey:    ["1625591339971-4c9a87a66871", .5,  .5 ],  // acetato cinza translúcido
+  optSilverRound:    ["1614715838608-dd527c46231d", .5,  .56],  // redondo metal prata
+  optHavanaCat:      ["1586165168228-06be0f2dafcb", .45, .55],  // cat eye havana, madeira
+  optGoldGlam:       ["1747640730472-3070d5ed690d", .45, .5 ],  // quadrado dourado cintilante
+  optBlackCat:       ["1766998193619-d1da81c8f608", .42, .55],  // cat eye preto em pé
+  optBlackRectArt:   ["1766998183913-b52fc73cca22", .5,  .5 ],  // retangular preto fino
+  optBlackRect:      ["1556306510-31ca015374b0",    .5,  .5 ],  // retangular preto clássico
+  optGoldPink:       ["1582142407894-ec85a1260a46", .3,  .55, 1.45], // redondo dourado (isola o par dourado)
+  optOliveCrystal:   ["1617791932882-a70117e3564d", .5,  .5 ],  // acetato oliva translúcido
+  optBlackGoldThin:  ["1646084081219-1090f72a531c", .5,  .5 ],  // cat eye fino preto / dourado
+  optBlackTray:      ["1764740130608-c3cf7214ebfc", .6,  .52, 1.7],  // preto em bandeja de prata (isola o par preto)
+  optHavanaCrystal:  ["1760446031723-e03702a3386d", .5,  .55],  // havana / cristal sobre madeira
+  /* — Editorial — */
+  displaySun:        ["1608539733292-190446b22b83", .5,  .5 ],  // vitrine de óculos de sol
+  displayWall:       ["1611222777277-61319d63ca94", .5,  .5 ],  // parede expositora
+  trioBlocks:        ["1588768897961-332c50c55d18", .5,  .5 ],  // trio editorial sobre blocos
+  handForest:        ["1512099053734-e6767b535838", .5,  .5 ]   // armação na mão, ao ar livre
+};
+const PHOTO_URL = (ph, o = {}) => {
+  const [id, fx, fy] = ph;
+  let u = `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${o.w || 900}`;
+  if (o.h) u += `&h=${o.h}`;
+  if (o.z || o.h) u += `&crop=focalpoint&fp-x=${fx}&fp-y=${fy}`;
+  if (o.z) u += `&fp-z=${o.z}`;
+  return u + "&q=80";
+};
+/* capa (foto inteira) → hover (detalhe) → close-up: sempre a mesma foto */
+const PHOTO_SET = ph => {
+  const cover = ph[3] || 0;
+  return [
+    PHOTO_URL(ph, { w:900, h:1125, z:cover || undefined }),
+    PHOTO_URL(ph, { w:900, h:1125, z:Math.max(cover * 1.35, 1.6) }),
+    PHOTO_URL(ph, { w:900, h:1125, z:Math.max(cover * 1.9, 2.4) })
+  ];
+};
+
 /* ---------------- Product database ---------------- */
 const products = [
   {
     id:1, name:"Lionn Monaco", category:"sol", gender:"unissex", price:1890, oldPrice:null,
     description:"O clássico absoluto da casa. Aviador contemporâneo em metal dourado com lentes gradientes, o Monaco equilibra herança e modernidade em cada curva. Desenhado para acompanhar você do primeiro café à última luz do dia.",
-    colors:[{name:"Black / Gold",hex:"#0A0A0A"},{name:"Havana",hex:"#6B4A2B"},{name:"Gold",hex:"#C6A15B"}],
+    colors:[
+      {name:"Black / Gold",hex:"#0A0A0A",photo:PH.sunBlackClub},
+      {name:"Havana",hex:"#6B4A2B",photo:PH.sunHavanaRound},
+      {name:"Gold",hex:"#C6A15B",photo:PH.sunGoldRound}
+    ],
     material:"Metal", shape:"Aviador", lens:"Gradiente UV400", measurements:"58 □ 14 — 140",
     stock:12, rating:4.9, reviews:128, badge:"BEST SELLER",
-    images:[IMG(IMG_POOL.b), IMG(IMG_POOL.a), IMG(IMG_POOL.l)],
     bestseller:true, newArrival:false
   },
   {
     id:2, name:"Lionn Milano", category:"grau", gender:"unissex", price:1490, oldPrice:1690,
     description:"Arquitetura óptica em sua forma mais pura. Armação retangular em acetato italiano polido à mão, com hastes afinadas e terminais em metal escovado. O Milano é a assinatura silenciosa de quem trabalha com precisão.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Transparente",hex:"#E9E6DD"},{name:"Havana",hex:"#6B4A2B"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.optBlackRect},
+      {name:"Transparente",hex:"#E9E6DD",photo:PH.optCrystalGrey},
+      {name:"Havana",hex:"#6B4A2B",photo:PH.optHavanaClub}
+    ],
     material:"Acetato", shape:"Retangular", lens:"Cristal antirreflexo", measurements:"52 □ 18 — 145",
     stock:8, rating:4.8, reviews:96, badge:null,
-    images:[IMG(IMG_POOL.c), IMG(IMG_POOL.k), IMG(IMG_POOL.g)],
     bestseller:true, newArrival:false
   },
   {
     id:3, name:"Lionn Roma", category:"sol", gender:"feminino", price:2190, oldPrice:null,
     description:"Um cat eye escultural que evoca o glamour eterno da Cidade Eterna. Acetato espesso, ângulos precisos e lentes profundas: o Roma foi criado para entradas memoráveis.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Havana",hex:"#6B4A2B"}],
+    colors:[
+      {name:"Havana / Gold",hex:"#6B4A2B",photo:PH.sunTortCatGold},
+      {name:"Blush / Gold",hex:"#E8C6B4",photo:PH.sunNudeCat},
+      {name:"Preto / Gold",hex:"#0A0A0A",photo:PH.sunBlackGoldSq}
+    ],
     material:"Acetato", shape:"Cat Eye", lens:"Polarizada UV400", measurements:"54 □ 17 — 142",
     stock:4, rating:4.9, reviews:87, badge:"BEST SELLER",
-    images:[IMG(IMG_POOL.h), IMG(IMG_POOL.e), IMG(IMG_POOL.d)],
     bestseller:true, newArrival:false
   },
   {
     id:4, name:"Lionn Firenze", category:"grau", gender:"unissex", price:1290, oldPrice:null,
     description:"Redondo intelectual com alma renascentista. Aro fino em metal com plaquetas ajustáveis e ponte keyhole, o Firenze é leveza estrutural para o dia inteiro.",
-    colors:[{name:"Gold",hex:"#C6A15B"},{name:"Silver",hex:"#B9B9B9"},{name:"Preto",hex:"#0A0A0A"}],
+    colors:[
+      {name:"Silver",hex:"#B9B9B9",photo:PH.optSilverRound},
+      {name:"Gold",hex:"#C6A15B",photo:PH.optGoldPink}
+    ],
     material:"Metal", shape:"Redondo", lens:"Cristal antirreflexo", measurements:"49 □ 21 — 145",
     stock:15, rating:4.7, reviews:64, badge:null,
-    images:[IMG(IMG_POOL.f), IMG(IMG_POOL.m), IMG(IMG_POOL.c)],
     bestseller:false, newArrival:true
   },
   {
     id:5, name:"Lionn Capri", category:"sol", gender:"feminino", price:1790, oldPrice:1990,
     description:"O verão mediterrâneo condensado em um objeto. Formato quadrado suavizado, acetato translúcido e lentes em tom âmbar: o Capri é luz filtrada com elegância.",
-    colors:[{name:"Transparente",hex:"#E9E6DD"},{name:"Havana",hex:"#6B4A2B"}],
+    colors:[
+      {name:"Transparente",hex:"#E9E6DD",photo:PH.sunCrystalRound},
+      {name:"Verde",hex:"#4F6B5A",photo:PH.sunGreenCrystal}
+    ],
     material:"Acetato", shape:"Quadrado", lens:"Gradiente UV400", measurements:"53 □ 19 — 140",
     stock:9, rating:4.8, reviews:73, badge:"SALE",
-    images:[IMG(IMG_POOL.e), IMG(IMG_POOL.i), IMG(IMG_POOL.h)],
     bestseller:false, newArrival:true
   },
   {
     id:6, name:"Lionn Torino", category:"grau", gender:"masculino", price:1590, oldPrice:null,
     description:"Rigor industrial do norte italiano. Titanium ultraleve, linhas retas e charneiras de precisão alemã. O Torino desaparece no rosto e permanece na memória.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Silver",hex:"#B9B9B9"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.optBlackRectArt},
+      {name:"Silver",hex:"#B9B9B9",photo:PH.optSilverRound}
+    ],
     material:"Titanium", shape:"Retangular", lens:"Cristal antirreflexo", measurements:"54 □ 17 — 145",
     stock:6, rating:4.9, reviews:52, badge:null,
-    images:[IMG(IMG_POOL.k), IMG(IMG_POOL.g), IMG(IMG_POOL.f)],
     bestseller:true, newArrival:false
   },
   {
     id:7, name:"Lionn Venezia", category:"signature", gender:"unissex", price:3890, oldPrice:null,
     description:"Peça da coleção Signature, produzida em série limitada e numerada. Acetato Mazzucchelli exclusivo, filete interno em ouro 24k e estojo em couro toscano. O Venezia não segue estações — ele as atravessa.",
-    colors:[{name:"Black / Gold",hex:"#0A0A0A"},{name:"Havana",hex:"#6B4A2B"}],
+    colors:[
+      {name:"Black / Gold",hex:"#0A0A0A",photo:PH.optBlackTray},
+      {name:"Havana",hex:"#6B4A2B",photo:PH.optHavanaCrystal}
+    ],
     material:"Acetato", shape:"Quadrado", lens:"Cristal polarizado", measurements:"51 □ 20 — 145",
     stock:3, rating:5.0, reviews:31, badge:"SIGNATURE",
-    images:[IMG(IMG_POOL.l), IMG(IMG_POOL.j), IMG(IMG_POOL.a)],
     bestseller:true, newArrival:false
   },
   {
     id:8, name:"Lionn Bellagio", category:"sol", gender:"masculino", price:2090, oldPrice:null,
     description:"Presença à beira do lago. Quadrado de acetato encorpado com lentes verdes G-15, o Bellagio é sobriedade com peso específico de luxo.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Havana",hex:"#6B4A2B"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.sunBlackRect},
+      {name:"Havana",hex:"#6B4A2B",photo:PH.sunHavanaRound}
+    ],
     material:"Acetato", shape:"Quadrado", lens:"G-15 UV400", measurements:"55 □ 18 — 145",
     stock:11, rating:4.8, reviews:59, badge:null,
-    images:[IMG(IMG_POOL.d), IMG(IMG_POOL.b), IMG(IMG_POOL.i)],
     bestseller:false, newArrival:false
   },
   {
     id:9, name:"Lionn Portofino", category:"sol", gender:"unissex", price:2490, oldPrice:null,
     description:"Aviador de dupla ponte em metal escovado, inspirado nas manhãs douradas da Riviera. Lentes espelhadas discretas e hastes com núcleo flexível.",
-    colors:[{name:"Gold",hex:"#C6A15B"},{name:"Silver",hex:"#B9B9B9"}],
+    colors:[
+      {name:"Gold",hex:"#C6A15B",photo:PH.sunGoldMarble},
+      {name:"Silver",hex:"#B9B9B9",photo:PH.sunSilverAviator}
+    ],
     material:"Metal", shape:"Aviador", lens:"Espelhada UV400", measurements:"59 □ 13 — 140",
     stock:7, rating:4.9, reviews:44, badge:"NEW",
-    images:[IMG(IMG_POOL.j), IMG(IMG_POOL.h), IMG(IMG_POOL.e)],
     bestseller:false, newArrival:true
   },
   {
     id:10, name:"Lionn Amalfi", category:"sol", gender:"feminino", price:1990, oldPrice:null,
     description:"Curvas orgânicas talhadas como a costa que lhe dá nome. Redondo oversized em acetato cristal com lentes rosé, o Amalfi é romantismo estrutural.",
-    colors:[{name:"Transparente",hex:"#E9E6DD"},{name:"Preto",hex:"#0A0A0A"}],
+    colors:[
+      {name:"Rosé",hex:"#E9B7B0",photo:PH.sunPinkRound},
+      {name:"Preto",hex:"#0A0A0A",photo:PH.sunBlackBeach}
+    ],
     material:"Acetato", shape:"Redondo", lens:"Gradiente UV400", measurements:"52 □ 20 — 142",
     stock:0, rating:4.7, reviews:38, badge:null,
-    images:[IMG(IMG_POOL.i), IMG(IMG_POOL.e), IMG(IMG_POOL.h)],
     bestseller:false, newArrival:true
   },
   {
     id:11, name:"Lionn Verona", category:"grau", gender:"feminino", price:1390, oldPrice:1590,
     description:"Cat eye óptico de proporções delicadas. Acetato bicolor com interior em tom nude, o Verona emoldura o olhar sem jamais competir com ele.",
-    colors:[{name:"Havana",hex:"#6B4A2B"},{name:"Preto",hex:"#0A0A0A"}],
+    colors:[
+      {name:"Havana",hex:"#6B4A2B",photo:PH.optHavanaCat},
+      {name:"Preto",hex:"#0A0A0A",photo:PH.optBlackCat}
+    ],
     material:"Acetato", shape:"Cat Eye", lens:"Cristal antirreflexo", measurements:"51 □ 18 — 140",
     stock:13, rating:4.6, reviews:41, badge:"SALE",
-    images:[IMG(IMG_POOL.g), IMG(IMG_POOL.m), IMG(IMG_POOL.k)],
     bestseller:false, newArrival:false
   },
   {
     id:12, name:"Lionn Sicilia", category:"sol", gender:"unissex", price:990, oldPrice:null,
     description:"A porta de entrada para o universo Lionn. Retangular em acetato injetado de alta densidade, lentes fumê e a mesma obsessão por acabamento das peças maiores.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Havana",hex:"#6B4A2B"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.sunBlackGold},
+      {name:"Preto / Espelhado",hex:"#1F2A33",photo:PH.sunBlackMirror}
+    ],
     material:"Acetato", shape:"Retangular", lens:"Fumê UV400", measurements:"54 □ 18 — 142",
     stock:22, rating:4.5, reviews:112, badge:null,
-    images:[IMG(IMG_POOL.a), IMG(IMG_POOL.d), IMG(IMG_POOL.b)],
     bestseller:true, newArrival:false
   },
   {
     id:13, name:"Lionn Como", category:"grau", gender:"unissex", price:1690, oldPrice:null,
     description:"Serenidade alpina em forma de óculos. Panto arredondado em acetato fosco com hastes de titanium, o Como é o equilíbrio raro entre caráter e discrição.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Transparente",hex:"#E9E6DD"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.optBlackClubWood},
+      {name:"Transparente",hex:"#E9E6DD",photo:PH.optOliveCrystal}
+    ],
     material:"Titanium", shape:"Redondo", lens:"Cristal antirreflexo", measurements:"50 □ 20 — 145",
     stock:5, rating:4.8, reviews:29, badge:"NEW",
-    images:[IMG(IMG_POOL.m), IMG(IMG_POOL.f), IMG(IMG_POOL.c)],
     bestseller:false, newArrival:true
   },
   {
     id:14, name:"Lionn Palermo", category:"sol", gender:"masculino", price:2290, oldPrice:null,
     description:"Barroco contido. Quadrado de vértices marcados com frontal em acetato e hastes de metal cinzelado, o Palermo carrega ornamento na medida exata.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Gold",hex:"#C6A15B"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.sunBlackMirror},
+      {name:"Gold",hex:"#C6A15B",photo:PH.optGoldGlam}
+    ],
     material:"Metal", shape:"Quadrado", lens:"Polarizada UV400", measurements:"56 □ 17 — 145",
     stock:3, rating:4.7, reviews:26, badge:null,
-    images:[IMG(IMG_POOL.h), IMG(IMG_POOL.j), IMG(IMG_POOL.d)],
     bestseller:false, newArrival:false
   },
   {
     id:15, name:"Lionn Ravello", category:"signature", gender:"unissex", price:4390, oldPrice:null,
     description:"O ápice da coleção Signature. Frontal esculpido em bloco único de acetato japonês, charneiras banhadas a ouro e lentes minerais lapidadas. Cada Ravello leva 18 horas de trabalho manual — e leva o seu nome gravado na haste.",
-    colors:[{name:"Black / Gold",hex:"#0A0A0A"}],
+    colors:[
+      {name:"Black / Gold",hex:"#0A0A0A",photo:PH.optBlackGoldThin}
+    ],
     material:"Acetato", shape:"Quadrado", lens:"Mineral polarizada", measurements:"53 □ 19 — 145",
     stock:2, rating:5.0, reviews:18, badge:"SIGNATURE",
-    images:[IMG(IMG_POOL.l), IMG(IMG_POOL.b), IMG(IMG_POOL.j)],
     bestseller:false, newArrival:true
   },
   {
     id:16, name:"Lionn Positano", category:"sol", gender:"feminino", price:2690, oldPrice:null,
     description:"Vertiginoso como a vila que o inspira. Oversized geométrico com lentes degradê profundas e acetato em camadas, o Positano transforma qualquer trajeto em passarela.",
-    colors:[{name:"Preto",hex:"#0A0A0A"},{name:"Havana",hex:"#6B4A2B"},{name:"Transparente",hex:"#E9E6DD"}],
+    colors:[
+      {name:"Preto",hex:"#0A0A0A",photo:PH.sunBlackRoundPink},
+      {name:"Havana",hex:"#6B4A2B",photo:PH.sunTortCat},
+      {name:"Transparente",hex:"#E9E6DD",photo:PH.sunGreenCrystal}
+    ],
     material:"Acetato", shape:"Quadrado", lens:"Gradiente UV400", measurements:"57 □ 16 — 142",
     stock:6, rating:4.9, reviews:33, badge:"NEW",
-    images:[IMG(IMG_POOL.e), IMG(IMG_POOL.i), IMG(IMG_POOL.a)],
     bestseller:false, newArrival:true
   }
 ];
+/* Deriva os conjuntos de imagens por cor; `images` = cor padrão (compatibilidade) */
+products.forEach(p => {
+  p.colors.forEach(c => { c.images = PHOTO_SET(c.photo); });
+  p.images = p.colors[0].images;
+});
 const CATEGORY_LABEL = { sol:"Óculos de Sol", grau:"Óculos de Grau", signature:"Signature" };
 const COUPONS = { LIONN10:0.10, WELCOME15:0.15 };
 const FREE_SHIPPING_MIN = 1500;
@@ -1314,6 +1579,8 @@ const SHIPPING = {
 const Products = {
   all(){ return products; },
   byId(id){ return products.find(p => p.id === Number(id)) || null; },
+  colorOf(p, name){ return p.colors.find(c => c.name === name) || p.colors[0]; },
+  imagesFor(p, name){ return Products.colorOf(p, name).images; },
   bestsellers(){ return products.filter(p => p.bestseller); },
   newArrivals(){ return products.filter(p => p.newArrival); },
   related(p){ return products.filter(x => x.id !== p.id && (x.category === p.category || x.shape === p.shape)).slice(0,4); },
@@ -1529,8 +1796,8 @@ const UI = {
       if (!p) return "";
       return `
       <div class="cart-line">
-        <a class="cart-line-img" href="#/produto/${p.id}" onclick="UI.closeDrawer()">
-          <img src="${p.images[0]}" alt="${Utils.esc(p.name)}" loading="lazy" onerror="imgFail(this)">
+        <a class="cart-line-img" href="#/produto/${p.id}?cor=${encodeURIComponent(l.color)}" onclick="UI.closeDrawer()">
+          <img src="${Products.imagesFor(p, l.color)[0]}" alt="${Utils.esc(p.name)} — ${Utils.esc(l.color)}" loading="lazy" onerror="imgFail(this)">
         </a>
         <div>
           <div class="cart-line-name">${Utils.esc(p.name)}</div>
@@ -1707,6 +1974,8 @@ const UI = {
       color = b.dataset.color;
       box.querySelectorAll(".color-swatch").forEach(s => s.classList.toggle("active", s === b));
       box.querySelector("#qv-color-name").textContent = color;
+      const qvImg = box.querySelector(".qv-img img");
+      if (qvImg){ qvImg.src = Products.imagesFor(p, color)[0]; qvImg.alt = `${p.name} — ${color}`; }
     });
     const out = box.querySelector("#qv-qty");
     box.querySelector("#qv-minus").addEventListener("click", () => { if (qty > 1){ qty--; out.textContent = qty; } });
@@ -1759,6 +2028,397 @@ const UI = {
   }
 };
 
+/* ---------------- Hero Showcase ----------------
+   Navegador automático de modelos na primeira dobra.
+   Referencia o array `products` (sem duplicar dados);
+   imagens do showcase são fotos de produto isolado,
+   usadas exclusivamente aqui. */
+const HERO_SLIDE_DURATION = 4500;
+const heroProducts = [
+  /* color: nome da cor do produto (a foto vem do catálogo, mesma foto da PDP)
+     feather: suavização das bordas | lift: brilho p/ fundir o fundo da foto ao stage */
+  { id:1, tag:"Signature frame", color:"Black / Gold", background:"#DDD7CE", feather:"10%", lift:1.08 },
+  { id:2, tag:"The Lionn edit",  color:"Havana",       background:"#E6E4DE", cutout:true, image:"assets/hero/milano-havana.webp" },
+  { id:3, tag:"Best seller",     color:"Havana / Gold", background:"#D4D0C7", cutout:true, image:"assets/hero/roma-havana.webp" },
+  { id:4, tag:"New icon",        color:"Silver",       background:"#EFECE5", feather:"10%", lift:1.08 },
+  { id:5, tag:"New arrival",     color:"Verde",        background:"#CBC5BA", feather:"12%", lift:1.08 }
+].map(h => {
+  const product = Products.byId(h.id);
+  const c = product && product.colors.find(x => x.name === h.color);
+  /* image: recorte local (fundo transparente) quando existir; senão, a foto da cor no catálogo */
+  return c ? Object.assign({}, h, { product, image:h.image || PHOTO_URL(c.photo, { w:1200, h:900 }) }) : null;
+}).filter(Boolean);
+
+const HeroShowcase = {
+  index:0,
+  el:null,
+  refs:null,
+  layer:0,
+  token:0,
+  startedAt:0,
+  hovered:false,
+  focused:false,
+  dragging:false,
+  stopped:false,
+  suppressClick:false,
+  pendingAdvance:false,
+  metaTimer:null,
+  guardTimer:null,
+  clickTimer:null,
+  watchdog:null,
+  imageCache:new Map(),
+  _globalBound:false,
+
+  pad(n){ return String(n).padStart(2,"0"); },
+  price(v){ return Utils.money(v).replace(/,00$/,""); },
+  installments(v){ return Utils.installments(v).replace(/^ou /,"").replace(/,00(?=\s)/,""); },
+  reducedMotion(){ return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); },
+  href(item){ return `#/produto/${item.product.id}?cor=${encodeURIComponent(item.color)}`; },
+  alt(item){ return `Óculos ${item.product.name} ${item.color}`; },
+
+  markup(){
+    const total = heroProducts.length;
+    if (!total) return "";
+    const first = heroProducts[0], p = first.product;
+    return `
+      <div class="hero-showcase" id="hero-showcase" role="region" aria-roledescription="carrossel" aria-label="Lionn Eyewear Showcase" tabindex="0">
+        <div class="hero-stage" id="hero-stage" style="--hero-bg:${first.background};--hero-feather:${first.feather};--hero-lift:${first.lift}">
+          <div class="hero-stage-top">
+            <span class="hero-stage-tag" id="hero-tag">${Utils.esc(first.tag || "")}</span>
+            <span class="hero-stage-mark" aria-hidden="true">Lionn<br>Eyewear</span>
+          </div>
+          <div class="hero-product-area">
+            <a class="hero-product-link" id="hero-product-link" href="${HeroShowcase.href(first)}" aria-label="Ver ${Utils.esc(p.name)}" draggable="false">
+              <div class="hero-product-frame">
+                <span class="hero-product-shadow" aria-hidden="true"></span>
+                <img class="hero-product-image is-active${first.cutout ? " is-cutout" : ""}" src="${first.image}" alt="${Utils.esc(HeroShowcase.alt(first))}" draggable="false" fetchpriority="high" decoding="sync">
+                <img class="hero-product-image" alt="" draggable="false" decoding="sync" aria-hidden="true">
+                <span class="hero-product-hint" aria-hidden="true">Ver modelo →</span>
+              </div>
+            </a>
+            <button type="button" class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Modelo anterior"><svg class="icon" aria-hidden="true"><use href="#i-arrow-l"/></svg></button>
+            <button type="button" class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Próximo modelo"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+          <div class="hero-product-meta" id="hero-meta">
+            <div>
+              <a class="hero-product-name" id="hero-name" href="${HeroShowcase.href(first)}">${Utils.esc(p.name)}</a>
+              <span class="hero-product-color" id="hero-color">${Utils.esc(first.color)}</span>
+            </div>
+            <div class="hero-product-pricing">
+              <span class="hero-product-price" id="hero-price">${HeroShowcase.price(p.price)}</span>
+              <span class="hero-product-installments" id="hero-installments">${HeroShowcase.installments(p.price)}</span>
+            </div>
+          </div>
+          <a class="link-line hero-product-view" id="hero-view" href="${HeroShowcase.href(first)}">Ver modelo<span aria-hidden="true">→</span></a>
+          <div class="hero-controls">
+            <div class="hero-indicators" id="hero-indicators" aria-label="Selecionar modelo">
+              ${heroProducts.map((h,i) => `<button type="button" class="hero-indicator" data-index="${i}" aria-label="Mostrar ${Utils.esc(h.product.name)}"${i === 0 ? ' aria-current="true"' : ""}><span class="hero-indicator-bar"><span class="hero-indicator-progress"></span></span></button>`).join("")}
+            </div>
+            <span class="hero-counter" id="hero-counter">${HeroShowcase.pad(1)} / ${HeroShowcase.pad(total)}</span>
+          </div>
+          <span class="visually-hidden" id="hero-status" aria-live="polite"></span>
+        </div>
+      </div>`;
+  },
+
+  init(){
+    HeroShowcase.destroy();
+    const el = document.getElementById("hero-showcase");
+    if (!el || !heroProducts.length) return;
+    const $ = id => document.getElementById(id);
+    HeroShowcase.el = el;
+    HeroShowcase.index = 0;
+    HeroShowcase.layer = 0;
+    HeroShowcase.hovered = HeroShowcase.focused = HeroShowcase.dragging = HeroShowcase.stopped = HeroShowcase.suppressClick = false;
+    HeroShowcase.startedAt = performance.now();
+    el.style.setProperty("--hero-duration", HERO_SLIDE_DURATION + "ms");
+    HeroShowcase.refs = {
+      stage:$("hero-stage"), tag:$("hero-tag"), link:$("hero-product-link"),
+      frame:el.querySelector(".hero-product-frame"),
+      layers:Array.from(el.querySelectorAll(".hero-product-image")),
+      meta:$("hero-meta"), name:$("hero-name"), color:$("hero-color"),
+      price:$("hero-price"), inst:$("hero-installments"), view:$("hero-view"),
+      indicators:Array.from(el.querySelectorAll(".hero-indicator")),
+      counter:$("hero-counter"), status:$("hero-status"), prev:$("hero-prev"), next:$("hero-next")
+    };
+    HeroShowcase.refs.layers.forEach(img => {
+      img.addEventListener("error", () => {
+        img.classList.add("is-broken");
+        if (img.classList.contains("is-active")) HeroShowcase.refs.frame.classList.add("is-empty");
+      });
+      img.addEventListener("load", () => {
+        img.classList.remove("is-broken");
+        if (img.classList.contains("is-active")) HeroShowcase.refs.frame.classList.remove("is-empty");
+      });
+    });
+    HeroShowcase.bindEvents();
+    HeroShowcase.bindGlobal();
+    HeroShowcase.updatePauseState();
+    HeroShowcase.armWatchdog();
+    HeroShowcase.preload();
+  },
+
+  destroy(){
+    clearTimeout(HeroShowcase.metaTimer);
+    clearTimeout(HeroShowcase.guardTimer);
+    clearTimeout(HeroShowcase.clickTimer);
+    clearTimeout(HeroShowcase.watchdog);
+    HeroShowcase.token++;
+    HeroShowcase.pendingAdvance = false;
+    HeroShowcase.el = null;
+    HeroShowcase.refs = null;
+  },
+
+  bindGlobal(){
+    if (HeroShowcase._globalBound) return;
+    HeroShowcase._globalBound = true;
+    document.addEventListener("visibilitychange", HeroShowcase.updatePauseState);
+  },
+
+  bindEvents(){
+    const { el, refs } = HeroShowcase;
+    const stage = refs.stage;
+
+    /* Indicadores */
+    el.querySelector("#hero-indicators").addEventListener("click", e => {
+      const btn = e.target.closest(".hero-indicator");
+      if (btn) HeroShowcase.goToHeroSlide(Number(btn.dataset.index), true);
+    });
+    el.querySelector("#hero-indicators").addEventListener("animationend", e => {
+      if (e.animationName === "heroProgress") HeroShowcase.onProgressEnd();
+    });
+
+    /* Setas */
+    refs.prev.addEventListener("click", () => HeroShowcase.previousHeroSlide(true));
+    refs.next.addEventListener("click", () => HeroShowcase.nextHeroSlide(true));
+
+    /* Hover (apenas mouse) */
+    el.addEventListener("pointerenter", e => { if (e.pointerType === "mouse"){ HeroShowcase.hovered = true; HeroShowcase.updatePauseState(); } });
+    el.addEventListener("pointerleave", e => { if (e.pointerType === "mouse"){ HeroShowcase.hovered = false; HeroShowcase.updatePauseState(); } });
+
+    /* Foco por teclado */
+    el.addEventListener("focusin", e => {
+      let kb = true;
+      try { kb = e.target.matches(":focus-visible"); } catch(_){ kb = true; }
+      if (kb){ HeroShowcase.focused = true; HeroShowcase.updatePauseState(); }
+    });
+    el.addEventListener("focusout", e => {
+      if (!el.contains(e.relatedTarget)){ HeroShowcase.focused = false; HeroShowcase.updatePauseState(); }
+    });
+    el.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight"){ e.preventDefault(); HeroShowcase.nextHeroSlide(true); }
+      else if (e.key === "ArrowLeft"){ e.preventDefault(); HeroShowcase.previousHeroSlide(true); }
+      else if (e.key === "Home"){ e.preventDefault(); HeroShowcase.goToHeroSlide(0, true); }
+      else if (e.key === "End"){ e.preventDefault(); HeroShowcase.goToHeroSlide(heroProducts.length - 1, true); }
+    });
+
+    /* Swipe (touch) e drag (mouse) — pointer events, sem biblioteca */
+    let gesture = null;
+    stage.addEventListener("pointerdown", e => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      if (e.target.closest("button, .hero-controls")) return;
+      gesture = { id:e.pointerId, x:e.clientX, y:e.clientY, axis:null };
+    });
+    stage.addEventListener("pointermove", e => {
+      if (!gesture || e.pointerId !== gesture.id) return;
+      const dx = e.clientX - gesture.x, dy = e.clientY - gesture.y;
+      if (!gesture.axis){
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        gesture.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+        if (gesture.axis === "x"){
+          HeroShowcase.dragging = true;
+          HeroShowcase.updatePauseState();
+          stage.classList.add("is-dragging");
+          try { stage.setPointerCapture(e.pointerId); } catch(_){}
+        }
+      }
+      if (gesture.axis !== "x") return;
+      const shift = Math.max(-48, Math.min(48, dx * .28));
+      refs.frame.style.transform = `translateX(${shift}px)`;
+    });
+    const endGesture = e => {
+      if (!gesture || (e && e.pointerId !== gesture.id)) return;
+      const dx = e ? e.clientX - gesture.x : 0;
+      const wasSwipe = gesture.axis === "x";
+      gesture = null;
+      stage.classList.remove("is-dragging");
+      refs.frame.style.transform = "";
+      HeroShowcase.dragging = false;
+      if (wasSwipe){
+        HeroShowcase.suppressClick = true;
+        clearTimeout(HeroShowcase.clickTimer);
+        HeroShowcase.clickTimer = setTimeout(() => { HeroShowcase.suppressClick = false; }, 400);
+        const threshold = Math.min(70, stage.clientWidth * .12);
+        if (dx <= -threshold) HeroShowcase.nextHeroSlide(true);
+        else if (dx >= threshold) HeroShowcase.previousHeroSlide(true);
+      }
+      HeroShowcase.updatePauseState();
+    };
+    stage.addEventListener("pointerup", endGesture);
+    stage.addEventListener("pointercancel", endGesture);
+    stage.addEventListener("dragstart", e => e.preventDefault());
+    stage.addEventListener("click", e => {
+      if (HeroShowcase.suppressClick && e.target.closest("a")){ e.preventDefault(); e.stopPropagation(); }
+    }, true);
+  },
+
+  updatePauseState(){
+    const el = HeroShowcase.el;
+    if (!el) return;
+    const paused = HeroShowcase.stopped || HeroShowcase.hovered || HeroShowcase.focused || HeroShowcase.dragging || document.hidden;
+    const wasPaused = el.classList.contains("is-paused");
+    el.classList.toggle("is-paused", paused);
+    if (!paused && HeroShowcase.pendingAdvance){
+      HeroShowcase.pendingAdvance = false;
+      HeroShowcase.nextHeroSlide(false);
+      return;
+    }
+    if (wasPaused && !paused) HeroShowcase.armWatchdog();
+  },
+
+  /* Seguro contra estagnação: se o animationend não chegar (aba congelada, etc.), avança por timer */
+  armWatchdog(){
+    clearTimeout(HeroShowcase.watchdog);
+    HeroShowcase.watchdog = setTimeout(() => {
+      const el = HeroShowcase.el;
+      if (!el) return;
+      if (el.classList.contains("is-paused")) HeroShowcase.armWatchdog();
+      else HeroShowcase.nextHeroSlide(false);
+    }, HERO_SLIDE_DURATION + 1500);
+  },
+
+  loadImage(src){
+    const cache = HeroShowcase.imageCache;
+    if (cache.has(src)) return cache.get(src);
+    const promise = new Promise(resolve => {
+      const img = new Image();
+      let done = false;
+      const finish = ok => { if (done) return; done = true; if (!ok) cache.delete(src); resolve(ok); };
+      const decoded = () => {
+        if (typeof img.decode === "function") img.decode().then(() => finish(true), () => finish(true));
+        else finish(true);
+      };
+      img.onload = decoded;
+      img.onerror = () => finish(false);
+      img.src = src;
+      if (img.complete && img.naturalWidth) decoded();
+      setTimeout(() => finish(true), 2500);
+    });
+    cache.set(src, promise);
+    return promise;
+  },
+
+  preload(){
+    const run = () => heroProducts.forEach(h => HeroShowcase.loadImage(h.image));
+    if ("requestIdleCallback" in window) window.requestIdleCallback(run, { timeout:1500 });
+    else setTimeout(run, 600);
+  },
+
+  /* Sincroniza indicadores, contador e progress imediatamente (feedback do clique) */
+  updateHeroProgress(index, manual){
+    const r = HeroShowcase.refs, total = heroProducts.length;
+    if (!r) return;
+    r.indicators.forEach((b, i) => {
+      if (i === index) b.setAttribute("aria-current", "true");
+      else b.removeAttribute("aria-current");
+    });
+    r.counter.textContent = `${HeroShowcase.pad(index + 1)} / ${HeroShowcase.pad(total)}`;
+    HeroShowcase.startedAt = performance.now();
+    clearTimeout(HeroShowcase.guardTimer);
+    HeroShowcase.pendingAdvance = false;
+    HeroShowcase.armWatchdog();
+    if (manual) r.status.textContent = `Modelo ${index + 1} de ${total}: ${heroProducts[index].product.name}`;
+  },
+
+  renderHeroProduct(index){
+    const r = HeroShowcase.refs;
+    if (!r) return;
+    const item = heroProducts[index], p = item.product;
+    const href = HeroShowcase.href(item);
+
+    /* Fundo (stage + frame, mesma cor para o blend) */
+    r.stage.style.setProperty("--hero-bg", item.background);
+    r.stage.style.setProperty("--hero-feather", item.feather || "8%");
+    r.stage.style.setProperty("--hero-lift", String(item.lift || 1.08));
+
+    /* Imagem: duas camadas, crossfade premium */
+    const outImg = r.layers[HeroShowcase.layer];
+    const inImg = r.layers[1 - HeroShowcase.layer];
+    HeroShowcase.layer = 1 - HeroShowcase.layer;
+    inImg.classList.add("no-transition");
+    inImg.classList.remove("is-out", "is-active");
+    inImg.classList.toggle("is-cutout", !!item.cutout);
+    if (inImg.getAttribute("src") !== item.image) inImg.src = item.image;
+    inImg.alt = HeroShowcase.alt(item);
+    inImg.removeAttribute("aria-hidden");
+    void inImg.offsetWidth;
+    inImg.classList.remove("no-transition");
+    inImg.classList.add("is-active");
+    outImg.classList.remove("is-active");
+    outImg.classList.add("is-out");
+    outImg.setAttribute("aria-hidden", "true");
+
+    /* Links */
+    r.link.href = href; r.name.href = href; r.view.href = href;
+    r.link.setAttribute("aria-label", `Ver ${p.name}`);
+
+    /* Texto com micro-transição */
+    clearTimeout(HeroShowcase.metaTimer);
+    const swap = () => {
+      r.tag.textContent = item.tag || "";
+      r.tag.style.visibility = item.tag ? "" : "hidden";
+      r.name.textContent = p.name;
+      r.color.textContent = item.color;
+      r.price.textContent = HeroShowcase.price(p.price);
+      r.inst.textContent = HeroShowcase.installments(p.price);
+      r.meta.classList.remove("is-switching");
+      r.tag.classList.remove("is-switching");
+    };
+    if (HeroShowcase.reducedMotion()){ swap(); return; }
+    r.meta.classList.add("is-switching");
+    r.tag.classList.add("is-switching");
+    HeroShowcase.metaTimer = setTimeout(swap, 240);
+  },
+
+  goToHeroSlide(index, manual){
+    const total = heroProducts.length;
+    if (!HeroShowcase.el || !total) return;
+    index = ((index % total) + total) % total;
+    if (index === HeroShowcase.index) return;
+    HeroShowcase.index = index;
+    const token = ++HeroShowcase.token;
+    HeroShowcase.updateHeroProgress(index, manual);
+    HeroShowcase.loadImage(heroProducts[index].image).then(() => {
+      if (token !== HeroShowcase.token || !HeroShowcase.el) return;
+      HeroShowcase.renderHeroProduct(index);
+    });
+  },
+  nextHeroSlide(manual){ HeroShowcase.goToHeroSlide(HeroShowcase.index + 1, manual); },
+  previousHeroSlide(manual){ HeroShowcase.goToHeroSlide(HeroShowcase.index - 1, manual); },
+
+  /* Autoplay: dirigido pelo fim da animação CSS do progress (sem setInterval) */
+  onProgressEnd(){
+    const el = HeroShowcase.el;
+    if (!el) return;
+    if (el.classList.contains("is-paused")){ HeroShowcase.pendingAdvance = true; return; }
+    const elapsed = performance.now() - HeroShowcase.startedAt;
+    if (elapsed < HERO_SLIDE_DURATION * .5){
+      /* animação encurtada (ex.: reduced motion sem override) — fallback por timer */
+      clearTimeout(HeroShowcase.guardTimer);
+      HeroShowcase.guardTimer = setTimeout(() => {
+        if (!HeroShowcase.el) return;
+        if (HeroShowcase.el.classList.contains("is-paused")) HeroShowcase.pendingAdvance = true;
+        else HeroShowcase.nextHeroSlide(false);
+      }, Math.max(0, HERO_SLIDE_DURATION - elapsed));
+      return;
+    }
+    HeroShowcase.nextHeroSlide(false);
+  },
+  startHeroAutoplay(){ HeroShowcase.stopped = false; HeroShowcase.updatePauseState(); },
+  stopHeroAutoplay(){ HeroShowcase.stopped = true; HeroShowcase.updatePauseState(); },
+  restartHeroAutoplay(){ HeroShowcase.updateHeroProgress(HeroShowcase.index, false); HeroShowcase.startHeroAutoplay(); }
+};
+
 /* ---------------- Views ---------------- */
 const Views = {
   filterState:{ cat:[], shape:[], material:[], color:[], price:[] },
@@ -1779,10 +2439,7 @@ const Views = {
           <a href="#/sobre" class="btn btn-outline">Descobrir mais</a>
         </div>
       </div>
-      <div class="hero-visual">
-        <img src="${IMG(IMG_POOL.d,1400)}" alt="Óculos de sol Lionn sobre superfície minimalista" onerror="imgFail(this)">
-        <span class="hero-frame" aria-hidden="true"></span>
-      </div>
+      ${HeroShowcase.markup()}
       <div class="hero-watermark" aria-hidden="true">LIONN</div>
     </section>
 
@@ -1846,7 +2503,7 @@ const Views = {
     <section class="section container" style="padding-top:0">
       <div class="editorial">
         <div class="editorial-media fade-up">
-          <img src="${IMG(IMG_POOL.o,1200)}" alt="Editorial Lionn — retrato com óculos" loading="lazy" onerror="imgFail(this)">
+          <img src="${IMG(IMG_POOL.o,1200)}" alt="Editorial Lionn — seleção de armações da coleção" loading="lazy" onerror="imgFail(this)">
         </div>
         <div class="editorial-copy fade-up" style="transition-delay:120ms">
           <span class="eyebrow">The Lionn Edit</span>
@@ -1940,6 +2597,7 @@ const Views = {
   },
 
   bindHome(){
+    HeroShowcase.init();
     const form = document.getElementById("newsletter-form");
     if (form) form.addEventListener("submit", e => {
       e.preventDefault();
@@ -2023,7 +2681,7 @@ const Views = {
     <div class="container" style="padding-bottom:var(--space-2xl)">
       <div class="catalog-layout">
         <aside class="filters" id="filters-desktop" aria-label="Filtros">${Views.filtersHTML()}</aside>
-        <div>
+        <div class="catalog-results">
           <div class="catalog-toolbar">
             <span class="result-count" id="result-count"></span>
             <button id="btn-filters-mobile" aria-haspopup="dialog"><svg class="icon icon-sm"><use href="#i-menu"/></svg> Filtrar</button>
@@ -2045,10 +2703,20 @@ const Views = {
     </div>`;
   },
 
-  renderCatalogGrid(){
+  renderCatalogGrid(initial){
     const grid = document.getElementById("catalog-grid");
     const count = document.getElementById("result-count");
     if (!grid) return;
+    /* Ao filtrar com a página rolada, mantém o usuário no topo dos resultados
+       (evita o salto causado pela mudança de altura da lista) */
+    if (!initial){
+      const toolbar = document.querySelector(".catalog-toolbar");
+      const headerH = (document.getElementById("site-header") || {}).offsetHeight || 72;
+      if (toolbar){
+        const top = Math.max(0, toolbar.getBoundingClientRect().top + window.scrollY - headerH - 16);
+        if (window.scrollY > top + 4) window.scrollTo({ top, behavior:"smooth" });
+      }
+    }
     const list = Views.applySort(Views.applyFilters(Products.all()));
     count.textContent = `${list.length} produto${list.length === 1 ? "" : "s"}`;
     grid.innerHTML = list.length
@@ -2087,7 +2755,7 @@ const Views = {
         { label:"Filtros", width:"min(480px,100%)" });
       sync(document.getElementById("filters-mobile"));
     });
-    Views.renderCatalogGrid();
+    Views.renderCatalogGrid(true);
   },
 
   /* ===== Bestsellers / New arrivals / Wishlist ===== */
@@ -2116,10 +2784,12 @@ const Views = {
   /* ===== PRODUCT PAGE ===== */
   pdpState:{ id:null, color:null, qty:1, img:0 },
 
-  product(id){
+  product(id, params = {}){
     const p = Products.byId(id);
     if (!p) return Views.notFound();
-    Views.pdpState = { id:p.id, color:p.colors[0].name, qty:1, img:0 };
+    const color0 = Products.colorOf(p, params.cor).name;
+    const imgs = Products.imagesFor(p, color0);
+    Views.pdpState = { id:p.id, color:color0, qty:1, img:0 };
     const low = p.stock > 0 && p.stock <= 4;
     const related = Products.related(p);
     return `
@@ -2133,11 +2803,11 @@ const Views = {
         <div class="pdp-gallery">
           <div class="pdp-main" id="pdp-main" role="button" tabindex="0" aria-label="Ampliar imagem">
             <button class="pdp-nav prev" id="pdp-prev" aria-label="Imagem anterior"><svg class="icon"><use href="#i-arrow-l"/></svg></button>
-            <img id="pdp-main-img" src="${p.images[0]}" alt="${Utils.esc(p.name)} — vista principal" onerror="imgFail(this)">
+            <img id="pdp-main-img" src="${imgs[0]}" alt="${Utils.esc(p.name)} — ${Utils.esc(color0)}" onerror="imgFail(this)">
             <button class="pdp-nav next" id="pdp-next" aria-label="Próxima imagem"><svg class="icon"><use href="#i-arrow"/></svg></button>
           </div>
           <div class="pdp-thumbs" id="pdp-thumbs">
-            ${p.images.map((src,i) => `<button class="pdp-thumb ${i===0?"active":""}" data-idx="${i}" aria-label="Ver imagem ${i+1}"><img src="${src}" alt="" loading="lazy" onerror="imgFail(this)"></button>`).join("")}
+            ${Views.pdpThumbs(imgs)}
           </div>
         </div>
         <div class="pdp-info">
@@ -2150,9 +2820,9 @@ const Views = {
           </div>
           <p class="pdp-install">${Utils.installments(p.price)} · <strong style="color:var(--color-gold-dark)">5% off no PIX</strong></p>
           <div class="pdp-divider"></div>
-          <span class="opt-label">Cor — <em id="pdp-color-name">${Utils.esc(p.colors[0].name)}</em></span>
+          <span class="opt-label">Cor — <em id="pdp-color-name">${Utils.esc(color0)}</em></span>
           <div class="color-swatches" id="pdp-swatches">
-            ${p.colors.map((c,i) => `<button class="color-swatch ${i===0?"active":""}" style="background:${c.hex}" data-color="${Utils.esc(c.name)}" aria-label="Selecionar cor ${Utils.esc(c.name)}"></button>`).join("")}
+            ${p.colors.map(c => `<button class="color-swatch ${c.name===color0?"active":""}" style="background:${c.hex}" data-color="${Utils.esc(c.name)}" aria-label="Selecionar cor ${Utils.esc(c.name)}"></button>`).join("")}
           </div>
           <div class="qty-row">
             <div class="qty" role="group" aria-label="Quantidade">
@@ -2205,6 +2875,10 @@ const Views = {
     </div>`;
   },
 
+  pdpThumbs(imgs){
+    return imgs.map((src,i) => `<button class="pdp-thumb ${i===0?"active":""}" data-idx="${i}" aria-label="Ver imagem ${i+1}"><img src="${src}" alt="" loading="lazy" onerror="imgFail(this)"></button>`).join("");
+  },
+
   bindProduct(){
     const p = Products.byId(Views.pdpState.id);
     if (!p) return;
@@ -2212,10 +2886,19 @@ const Views = {
     const mainImg = document.getElementById("pdp-main-img");
     const main = document.getElementById("pdp-main");
     const thumbs = document.getElementById("pdp-thumbs");
+    let imgs = Products.imagesFor(p, st.color);
     const setImg = i => {
-      st.img = (i + p.images.length) % p.images.length;
-      mainImg.src = p.images[st.img];
+      st.img = (i + imgs.length) % imgs.length;
+      mainImg.src = imgs[st.img];
       thumbs.querySelectorAll(".pdp-thumb").forEach(t => t.classList.toggle("active", Number(t.dataset.idx) === st.img));
+    };
+    /* troca de cor → galeria inteira passa a mostrar a foto daquela cor */
+    const setColor = name => {
+      st.color = name;
+      imgs = Products.imagesFor(p, name);
+      thumbs.innerHTML = Views.pdpThumbs(imgs);
+      mainImg.alt = `${p.name} — ${name}`;
+      setImg(0);
     };
     document.getElementById("pdp-prev").addEventListener("click", e => { e.stopPropagation(); setImg(st.img - 1); });
     document.getElementById("pdp-next").addEventListener("click", e => { e.stopPropagation(); setImg(st.img + 1); });
@@ -2234,7 +2917,7 @@ const Views = {
 
     document.getElementById("pdp-swatches").addEventListener("click", e => {
       const b = e.target.closest(".color-swatch"); if (!b) return;
-      st.color = b.dataset.color;
+      setColor(b.dataset.color);
       document.querySelectorAll("#pdp-swatches .color-swatch").forEach(s => s.classList.toggle("active", s === b));
       document.getElementById("pdp-color-name").textContent = st.color;
     });
@@ -2259,7 +2942,7 @@ const Views = {
 
     const addBtn = document.getElementById("pdp-add");
     addBtn.addEventListener("click", () => {
-      if (p.stock === 0){ UI.toast("Você será avisado quando o modelo voltar. (demonstração)"); return; }
+      if (p.stock === 0){ UI.toast("Você será avisado assim que o modelo voltar ao estoque."); return; }
       addBtn.classList.add("is-loading");
       setTimeout(() => {
         addBtn.classList.remove("is-loading");
@@ -2316,8 +2999,8 @@ const Views = {
           const p = Products.byId(l.id); if (!p) return "";
           return `
           <div class="cart-line">
-            <a class="cart-line-img" style="width:110px" href="#/produto/${p.id}">
-              <img src="${p.images[0]}" alt="${Utils.esc(p.name)}" loading="lazy" onerror="imgFail(this)">
+            <a class="cart-line-img" style="width:110px" href="#/produto/${p.id}?cor=${encodeURIComponent(l.color)}">
+              <img src="${Products.imagesFor(p, l.color)[0]}" alt="${Utils.esc(p.name)} — ${Utils.esc(l.color)}" loading="lazy" onerror="imgFail(this)">
             </a>
             <div>
               <div class="cart-line-name">${Utils.esc(p.name)}</div>
@@ -2489,7 +3172,7 @@ const Views = {
       ["Os óculos são originais?","Cada peça Lionn é numerada e acompanha certificado de originalidade. Vendemos exclusivamente através deste site."],
       ["Como escolher meu tamanho?","Use as medidas gravadas na haste interna do seu óculos atual (ex.: 52 □ 20 — 145) e compare com a tabela de medidas de cada modelo. Em dúvida, nosso concierge ajuda você pelo WhatsApp."],
       ["Posso colocar lentes de grau?","Sim. Todas as armações — inclusive as solares — aceitam lentes de grau em qualquer ótica de sua confiança, sem perda da garantia da armação."],
-      ["Quais métodos de pagamento estão disponíveis?","PIX (com 5% de desconto), cartão de crédito em até 12x sem juros e boleto bancário. Neste ambiente demonstrativo, nenhuma cobrança real é efetuada."]
+      ["Quais métodos de pagamento estão disponíveis?","PIX (com 5% de desconto), cartão de crédito em até 12x sem juros e boleto bancário."]
     ];
     return `
     <div class="page-hero container" style="text-align:center">
@@ -2578,7 +3261,7 @@ const Views = {
       check("ct-msg", document.getElementById("ct-msg").value.trim().length >= 5);
       if (!ok){ UI.toast("Revise os campos destacados.", "error"); return; }
       form.reset();
-      UI.toast("Mensagem enviada. O concierge responderá em breve. (demonstração)");
+      UI.toast("Mensagem enviada. O concierge responderá em breve.");
     });
   },
 
@@ -2665,7 +3348,7 @@ const Checkout = {
                   <button type="button" class="pay-tab" data-pay="boleto" role="tab" aria-selected="false"><svg class="icon"><use href="#i-barcode"/></svg>Boleto<span class="pay-tag">à vista</span></button>
                 </div>
                 <div id="pay-panel"></div>
-                <div class="demo-note"><svg class="icon"><use href="#i-info"/></svg><span>Ambiente demonstrativo — nenhuma cobrança será realizada e nenhum dado de pagamento é armazenado ou enviado.</span></div>
+                <span class="env-tag">Ambiente de teste</span>
               </div>
               <button type="submit" class="btn btn-primary btn-block" id="btn-finish" style="padding-block:20px">Finalizar pedido</button>
             </form>
@@ -2738,13 +3421,12 @@ const Checkout = {
       panel.innerHTML = `
       <div class="pix-box">
         <p style="font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--color-gold-dark);margin:0">5% off no PIX aplicado</p>
-        <svg class="pix-qr" viewBox="0 0 100 100" role="img" aria-label="QR Code demonstrativo">
+        <svg class="pix-qr" viewBox="0 0 100 100" role="img" aria-label="QR Code PIX">
           <rect width="100" height="100" fill="#fff"/>
           ${[[4,4],[64,4],[4,64]].map(([x,y]) => `<rect x="${x}" y="${y}" width="32" height="32" fill="#0A0A0A"/><rect x="${x+5}" y="${y+5}" width="22" height="22" fill="#fff"/><rect x="${x+10}" y="${y+10}" width="12" height="12" fill="#0A0A0A"/>`).join("")}
           ${Array.from({length:56}, (_,i) => { const x = 42 + (i%8)*7, y = 42 + Math.floor(i/8)*7; return ((i*7+3)%3===0)?`<rect x="${x}" y="${y}" width="5" height="5" fill="#0A0A0A"/>`:""; }).join("")}
-          <text x="50" y="98" font-size="6" text-anchor="middle" fill="#777">SIMULAÇÃO</text>
         </svg>
-        <p style="font-size:13px;color:var(--color-muted);margin:0">QR Code meramente ilustrativo. O código real seria gerado após a confirmação do pedido.</p>
+        <p style="font-size:13px;color:var(--color-muted);margin:0">Escaneie o código com o app do seu banco. A confirmação do pagamento é imediata.</p>
       </div>`;
     } else if (State.payment === "card"){
       panel.innerHTML = `
@@ -2767,7 +3449,7 @@ const Checkout = {
       cv.addEventListener("input", () => { cv.value = cv.value.replace(/\D/g,"").slice(0,4); });
     } else {
       panel.innerHTML = `
-      <p style="font-size:14.5px;color:var(--color-muted)">O boleto simulado seria gerado após a finalização, com vencimento em 3 dias úteis. O pedido é confirmado somente após a compensação do pagamento.</p>
+      <p style="font-size:14.5px;color:var(--color-muted)">O boleto é gerado após a finalização do pedido, com vencimento em 3 dias úteis. O pedido é confirmado após a compensação do pagamento.</p>
       <p class="measure-visual" style="font-size:15px;letter-spacing:.12em;background:var(--color-bg);padding:14px;border-radius:var(--radius-sm);border:1px dashed var(--color-border)">00000.00000 00000.000000 00000.000000 0 00000000000000</p>`;
     }
   },
@@ -2786,7 +3468,7 @@ const Checkout = {
         return `
         <div class="cart-line">
           <span class="cart-line-img" style="position:relative;overflow:visible">
-            <img src="${p.images[0]}" alt="${Utils.esc(p.name)}" style="border-radius:var(--radius-sm)" onerror="imgFail(this)">
+            <img src="${Products.imagesFor(p, l.color)[0]}" alt="${Utils.esc(p.name)} — ${Utils.esc(l.color)}" style="border-radius:var(--radius-sm)" onerror="imgFail(this)">
             <span class="qty-pill">${l.qty}</span>
           </span>
           <span><span class="cart-line-name">${Utils.esc(p.name)}</span><br><span class="cart-line-meta">${Utils.esc(l.color)}</span></span>
@@ -2850,7 +3532,7 @@ const Checkout = {
         customer:{ nome:v("f-nome") + " " + v("f-sobrenome"), email:v("f-email") },
         address:`${v("f-endereco")}, ${v("f-numero")}${v("f-comp") ? " — " + v("f-comp") : ""} · ${v("f-bairro")} · ${v("f-cidade")}/${v("f-uf")} · CEP ${v("f-cep")}`,
         shipping:SHIPPING[State.shipping.method].name + " — " + SHIPPING[State.shipping.method].eta,
-        payment:State.payment === "pix" ? "PIX (5% off)" : State.payment === "card" ? "Cartão de crédito (demonstrativo)" : "Boleto (demonstrativo)",
+        payment:State.payment === "pix" ? "PIX (5% off)" : State.payment === "card" ? "Cartão de crédito" : "Boleto bancário",
         subtotal:Cart.subtotal(),
         couponDiscount:Cart.couponDiscount(),
         coupon:State.coupon,
@@ -2881,7 +3563,7 @@ const Checkout = {
         <div class="confirm-check"><svg class="icon"><use href="#i-check"/></svg></div>
         <span class="eyebrow" style="justify-content:center">Pedido recebido</span>
         <h1 class="h1" style="margin-top:14px">Obrigado por escolher a Lionn.</h1>
-        <p class="lead" style="margin:14px auto 0">Seu pedido foi recebido. Você acompanharia cada etapa por e-mail — nesta demonstração, tudo termina aqui, com estilo.</p>
+        <p class="lead" style="margin:14px auto 0">Seu pedido foi recebido. Você acompanha cada etapa por e-mail — do atelier até a sua porta.</p>
         <span class="order-tag">Pedido #${o.id}</span>
       </div>
       <div class="order-panel fade-up">
@@ -2935,6 +3617,7 @@ const Router = {
     sticky.classList.remove("on");
     sticky.innerHTML = "";
     UI.closeDrawer(); UI.closeMenu(); UI.closeSearch(); UI.closeModal();
+    HeroShowcase.destroy();
     let title = "Lionn Eyewear — Luxury Eyewear";
     let bind = null;
 
@@ -2969,7 +3652,7 @@ const Router = {
       }
       case "produto": {
         const p = Products.byId(segments[1]);
-        app.innerHTML = Views.product(segments[1]);
+        app.innerHTML = Views.product(segments[1], params);
         if (p){ bind = Views.bindProduct; title = `${p.name} — Lionn Eyewear`; }
         break;
       }
@@ -3034,6 +3717,18 @@ const App = {
     document.getElementById("modal-backdrop").addEventListener("click", UI.closeModal);
     document.getElementById("back-top").addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
 
+    /* Logo: se já estiver na Home, sobe suavemente ao topo em vez de recarregar a rota */
+    document.addEventListener("click", e => {
+      const logo = e.target.closest("a.logo");
+      if (!logo) return;
+      const h = location.hash;
+      const onHome = h === "" || h === "#" || h === "#/" || h.startsWith("#/?");
+      if (onHome && Router.current === "home"){
+        e.preventDefault();
+        window.scrollTo({ top:0, behavior:"smooth" });
+      }
+    });
+
     document.getElementById("search-input").addEventListener("input", e => UI.renderSearch(e.target.value));
 
     /* ESC + focus trap */
@@ -3090,7 +3785,7 @@ const App = {
     }
   }
 };
-Object.assign(window, { App, Router, Store, State, Cart, Wishlist, Products, Checkout, Views, UI, Utils });
+Object.assign(window, { App, Router, Store, State, Cart, Wishlist, Products, Checkout, Views, UI, Utils, HeroShowcase });
 document.addEventListener("DOMContentLoaded", App.init);
 </script>
 </body>
